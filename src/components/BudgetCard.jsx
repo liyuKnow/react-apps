@@ -3,7 +3,7 @@ import { Card, ProgressBar, Stack, Button } from 'react-bootstrap'
 import { currencyFormatter } from '../util';
 
 
-const BudgetCard = ({ name, amount, max, gray, onAddExpenseClick, hideButtons }) => {
+const BudgetCard = ({ name, amount, max, gray, onAddExpenseClick, hideButtons, onViewExpenseClick }) => {
     const bgClasses = [];
     if (amount > max) {
         bgClasses.push('bg-danger', 'bg-opacity-10');
@@ -27,7 +27,7 @@ const BudgetCard = ({ name, amount, max, gray, onAddExpenseClick, hideButtons })
                 />}
                 {!hideButtons && (<Stack direction="horizontal" gap="2" className="mt-4">
                     <Button variant="outline-primary ms-auto" onClick={onAddExpenseClick}>Add Expense</Button>
-                    <Button variant="outline-info">View Budget</Button>
+                    <Button variant="outline-info" onClick={onViewExpenseClick}>View Budget</Button>
                 </Stack>)}
             </Card.Body>
         </Card>

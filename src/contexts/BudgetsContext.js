@@ -32,15 +32,21 @@ export const BudgetsContextProvider = ({ children }) => {
         })
     }
     function deleteBudget({ id }) {
-        setBudgets(prevBudgets => {
-            return prevBudgets.filter(budget => budget.id !== id);
-        });
-    }
-
-    function deleteExpenses({ id }) {
         setExpenses(prevExpenses => {
-            return prevExpenses.filter(expense => expense.id !== id);
-        });
+            return prevExpenses.map(expense => {
+                if (expense.budgetId !== id) return expense
+                return { ...expense, budgetId: UNCATEGORIZED_BUDGET_ID }
+            })
+        })
+
+        setBudgets(prevBudgets => {
+            return prevBudgets.filter(budget => budget.id !== id)
+        })
+    }
+    function deleteExpense({ id }) {
+        setExpenses(prevExpenses => {
+            return prevExpenses.filter(expense => expense.id !== id)
+        })
     }
 
     return (
@@ -52,7 +58,7 @@ export const BudgetsContextProvider = ({ children }) => {
                 addBudget,
                 addExpense,
                 deleteBudget,
-                deleteExpenses,
+                deleteExpense,
             }}
         >
             {children}
