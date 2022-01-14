@@ -34,7 +34,7 @@ const AddBudgetModal = ({ show, handleClose }) => {
                             <Form.Control ref={maxRef} type="number" placeholder="Enter the maximum amount" required min={0} step={0.01} />
                         </Form.Group>
                         <div className="d-flex justify-content-end">
-                            <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+                            <Button className="me-2" variant="secondary" onClick={handleClose}>Cancel</Button>
                             <Button className="btn btn-primary" type="submit" onClick={handleSubmit}>Add Budget</Button>
                         </div>
                     </Modal.Body>

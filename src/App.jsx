@@ -1,22 +1,27 @@
 import { useState } from 'react';
 import { Button, Container, Stack } from "react-bootstrap";
 import AddBudgetModal from "./components/AddBudgetModal";
+import AddExpenseModal from "./components/AddExpenseModal";
 import BudgetCard from "./components/BudgetCard";
 import { useBudgets } from "./contexts/BudgetsContext";
 
 function App() {
-  const { budgets, expenses, getBudgetExpenses } = useBudgets();
   const [showAddBudgetModal, setShowAddBudgetModal] = useState(false);
+  const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
+  const [addExpenseModalBudgetId, setAddExpenseModalBudgetId] = useState();
+  const { budgets, expenses, getBudgetExpenses } = useBudgets();
 
-  const handleCloseAddBudgetModal = () => setShowAddBudgetModal(false);
-  const handleShowAddBudgetModal = () => setShowAddBudgetModal(true);
+  const openAddExpenseModal = (budgetId) => {
+    setShowAddExpenseModal(true)
+    setAddExpenseModalBudgetId(budgetId)
+  };
   return (
     <>
       <Container className="my-4">
         <Stack direction="horizontal" gap="2" className="mb-4">
           <h1 className="me-auto">Budgets</h1>
           <Button variant="primary" onClick={() => setShowAddBudgetModal(true)}>Add Budget</Button>
-          <Button variant="outline-info">Add Expense</Button>
+          <Button variant="outline-info" onClick={() => openAddExpenseModal(true)}>Add Expense</Button>
         </Stack>
         <div style={{
           display: "grid",
@@ -34,6 +39,7 @@ function App() {
                 name={budget.name}
                 amount={amount}
                 max={budget.max}
+                onAddExpenseClick={() => openAddExpenseModal(budget.id)}
               />
             )
           })}
@@ -41,6 +47,11 @@ function App() {
         <AddBudgetModal
           show={showAddBudgetModal}
           handleClose={() => setShowAddBudgetModal(false)}
+        />
+        <AddExpenseModal
+          show={showAddExpenseModal}
+          defaultBudgetId={addExpenseModalBudgetId}
+          handleClose={() => setShowAddExpenseModal(false)}
         />
       </Container>
     </>
