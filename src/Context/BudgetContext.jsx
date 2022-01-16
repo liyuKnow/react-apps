@@ -3,6 +3,20 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const budgetReducer = (state, action) => {
     switch (action.type) {
+        case 'ADD_EXPENSE':
+            return {
+                ...state,
+                expenses: [...state.expenses, action.payload],
+                remaining: state.remaining - action.payload.amount
+            };
+        case 'DELETE_EXPENSE':
+            return {
+                ...state,
+                expenses: state.expenses.filter(expense => expense.id !== action.payload),
+                remaining: state.remaining + parseFloat(state.expenses.find(expense => expense.id === action.payload).amount)
+            };
+        // case 'EDIT_EXPENSE':
+
 
         default:
             return state;
@@ -11,18 +25,9 @@ export const budgetReducer = (state, action) => {
 
 //  Initial state
 const initialState = {
-    budget: 2000,
+    budget: 3000,
+    remaining: 3000,
     expenses: [
-        {
-            id: 1,
-            name: 'Rent',
-            amount: 800
-        },
-        {
-            id: 2,
-            name: 'Food',
-            amount: 600
-        },
     ],
 };
 
@@ -37,6 +42,7 @@ export const BudgetProvider = (props) => {
         <BudgetContext.Provider
             value={{
                 budget: state.budget,
+                remaining: state.remaining,
                 expenses: state.expenses,
                 dispatch,
             }}

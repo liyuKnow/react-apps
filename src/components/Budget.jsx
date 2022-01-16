@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Button } from 'react-bootstrap'
-import { BudgetProvider } from "../Context/BudgetContext";
+import { BudgetContext } from "../Context/BudgetContext";
 
 const Budget = () => {
-    const { budget, dispatch } = useContext(BudgetProvider);
+    const { budget, dispatch } = useContext(BudgetContext);
     return (
         <div className="col-md-4">
             <div className="alert alert-secondary d-flex justify-content-between">
